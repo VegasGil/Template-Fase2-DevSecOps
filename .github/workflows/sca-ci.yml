@@ -18,6 +18,6 @@ jobs:
           scan-type: 'fs'
           scan-ref: 'sample-app/'
           scanners: 'vuln'
-          severity: 'HIGH,CRITICAL'
+          severity: 'MEDIUM,HIGH,CRITICAL' # <-- Añadimos MEDIUM
           exit-code: '1'
           format: 'table'
