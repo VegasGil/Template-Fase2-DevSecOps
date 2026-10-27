@@ -12,11 +12,24 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # 1. Instalamos Node.js en el servidor de GitHub
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 2. Ejecutamos npm install para generar el package-lock.json
+      - name: Install dependencies
+        run: |
+          cd sample-app
+          npm install
+
       - name: Install Trivy
         run: |
           wget https://github.com/aquasecurity/trivy/releases/download/v0.76.0/trivy_0.76.0_Linux-64bit.tar.gz
           tar zxvf trivy_0.76.0_Linux-64bit.tar.gz
           sudo mv trivy /usr/local/bin/
 
+      # 3. Ejecutamos el script de Python para forzar el fallo
       - name: Run Custom SCA Script
         run: python3 scripts/check_trivy.py
