@@ -16,4 +16,4 @@ jobs:
 
       - name: Run Semgrep (Javascript/Typescript)
         run: |
-          semgrep --config=p/javascript --config=p/nodejs --severity=ERROR sample-app/ || exit 1
+          semgrep --config=p/javascript --config=p/nodejs --severity=ERROR --error sample-app/
