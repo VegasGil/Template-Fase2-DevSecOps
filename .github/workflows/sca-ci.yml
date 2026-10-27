@@ -1,0 +1,23 @@
+name: SCA CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  trivy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Run Trivy (SCA)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: 'fs'
+          scan-ref: 'sample-app/'
+          scanners: 'vuln'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
+          format: 'table'
