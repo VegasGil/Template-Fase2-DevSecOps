@@ -12,12 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.76.0/trivy_0.76.0_Linux-64bit.tar.gz
+          tar zxvf trivy_0.76.0_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
+
       - name: Run Trivy (SCA)
-        uses: aquasecurity/trivy-action@v0.36.0
-        with:
-          scan-type: 'fs'
-          scan-ref: 'sample-app/'
-          scanners: 'vuln'
-          severity: 'MEDIUM,HIGH,CRITICAL' # <-- Añadimos MEDIUM
-          exit-code: '1'
-          format: 'table'
+        run: trivy fs --scanners vuln --severity MEDIUM,HIGH,CRITICAL --exit-code 1 sample-app/
